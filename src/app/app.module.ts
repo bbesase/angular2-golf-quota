@@ -8,7 +8,16 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { FormsModule }   from '@angular/forms';
 import { environment } from '../environments/environment';
+
+import { CreateAccountComponent } from './login/create-account.component';
+
+import {
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule
+} from '@angular/material';
 
 const appRoutes: Routes = [
   { path: 'login', component: AppComponent },
@@ -17,7 +26,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +36,10 @@ const appRoutes: Routes = [
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    FormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

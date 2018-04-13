@@ -1,0 +1,28 @@
+<div class="create-container">
+  <form class="create-form" #loginForm="ngForm" (ngSubmit)="create()">
+    <div class="name-container">
+      <mat-form-field class="firstname">
+        <input matInput name="firstname" placeholder="First Name" required [(ngModel)]="user.firstname" #firstname>
+      </mat-form-field>
+  
+      <mat-form-field class="lastname">
+        <input matInput name="lastname" placeholder="Last Name" required [(ngModel)]="user.lastname" #lastname>
+      </mat-form-field>
+    </div>
+
+    <div class="credential-container">
+      <mat-form-field>
+        <input matInput class="username" name="username" placeholder="Username" required [(ngModel)]="user.username" #username>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput class="password" name="password" placeholder="Password" type="password" required [(ngModel)]="user.password" #password>
+      </mat-form-field>
+    </div>
+
+    <div class="action-container">
+      <button mat-raised-button class="cancel" (click)="clear()">Cancel</button>
+      <button mat-raised-button class="create" [ngClass]="{success: loginForm.form.valid}" [disabled]="!loginForm.form.valid">Create</button>
+    </div>
+  </form>
+</div>
