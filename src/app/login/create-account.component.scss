@@ -1,0 +1,45 @@
+.create-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+
+  .create-form {
+    .name-container {
+      display: flex;
+      justify-content: space-between;
+
+      .firstname {
+        width: 48%
+      }
+
+      .lastname {
+        width: 48%;
+      }
+    }
+
+    .credential-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .action-container {
+      display: flex;
+      justify-content: space-between;
+
+      .cancel {
+        width: 48%;
+      }
+
+      .create {
+        width: 48%;
+
+        &.success {
+          background: #8BC34A;
+        }
+      }
+    }
+  }
+}
