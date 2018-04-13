@@ -1,5 +1,18 @@
 <div class="app-container">
   <router-outlet></router-outlet>
-  <quota-create-account></quota-create-account>
-</div>
+  <quota-create-account *ngIf="isCreatingAccount; else accountLogin"></quota-create-account>
 
+  <ng-template #accountLogin>
+    <quota-login></quota-login>
+  </ng-template>
+
+  <div class="login-text-container">
+    <div *ngIf="isCreatingAccount; else login">
+      <span>Already Have An Account <span class="mid-text" (click)="changeText()">Login Here</span></span>
+    </div>
+
+    <ng-template #login>
+      <span>Don't Have An Account <span class="mid-text" (click)="changeText()">Create One Here!</span></span>
+    </ng-template>
+  </div>
+</div>

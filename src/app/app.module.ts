@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,10 +9,11 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { environment } from '../environments/environment';
 
 import { CreateAccountComponent } from './login/create-account.component';
+import { LoginComponent } from './login/login.component';
 
 import {
   MatButtonModule,
@@ -27,19 +29,22 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    LoginComponent
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    CommonModule,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

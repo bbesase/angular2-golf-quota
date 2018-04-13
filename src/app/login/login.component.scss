@@ -1,24 +1,11 @@
-.create-container {
+.login-container {
   display: flex;
   margin: auto;
   justify-content: center;
   align-items: center;
 
-  .create-form {
+  .login-form {
     width: 500px;
-
-    .name-container {
-      display: flex;
-      justify-content: space-between;
-
-      .firstname {
-        width: 48%
-      }
-
-      .lastname {
-        width: 48%;
-      }
-    }
 
     .credential-container {
       display: flex;
