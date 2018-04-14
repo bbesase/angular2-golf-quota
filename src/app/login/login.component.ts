@@ -1,5 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { EmitService } from '../services/emit.service';
+
+import { includes } from 'lodash';
+
 @Component({
   selector: 'quota-login',
   templateUrl: 'login.component.html',
@@ -14,7 +18,7 @@ export class LoginComponent implements OnInit {
     password: null
   }
 
-  constructor() { }
+  constructor(private emitService: EmitService) { }
 
   ngOnInit() {
   }
@@ -35,7 +39,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('logged in')
-    // login logic goes here
+    let userArray = [this.storedUsers];
+    if (!includes(!userArray[0], this.user.username)) {
+      this.emitService.emitUserCanAdvance(true);
+    }
   }
 }
