@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'quota-login',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class LoginComponent implements OnInit {
+  @Input() storedUsers;
 
   user: any = {
     username: null,
@@ -15,7 +16,18 @@ export class LoginComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
+
+  ngOnChanges(changes) {
+    if (changes.storedUsers) {
+      if(!changes.storedUsers.firstChange) {
+        this.storedUsers = changes.storedUsers.currentValue;
+      }
+    }
+
+    console.log('current users', this.storedUsers)
+  }
 
   clear() {
     this.user.username = null;

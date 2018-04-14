@@ -1,9 +1,9 @@
 <div class="app-container">
   <router-outlet></router-outlet>
-  <quota-create-account *ngIf="isCreatingAccount; else accountLogin"></quota-create-account>
+  <quota-create-account *ngIf="isCreatingAccount; else accountLogin" [storedUsers]="userInfo"></quota-create-account>
 
   <ng-template #accountLogin>
-    <quota-login></quota-login>
+    <quota-login [storedUsers]="userInfo"></quota-login>
   </ng-template>
 
   <div class="login-text-container">

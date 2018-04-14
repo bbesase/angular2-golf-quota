@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { EmitService } from '../services/emit.service';
 import { FirebaseService } from '../services/firebase.service';
@@ -10,25 +10,44 @@ import { FirebaseService } from '../services/firebase.service';
 })
 
 export class CreateAccountComponent implements OnInit {
+  @Input() storedUsers;
+
   user: any = {
-    firstname: null,
-    lastname: null,
-    username: null,
-    password: null,
-    quota1: 0,
-    quota2: 0,
-    quota3: 0,
-    quota4: 0,
-    quota5: 0,
-    quota6: 0,
-    quota7: 0,
-    quota8: 0,
-    averageQuota: 0,
+    info: {
+      firstname: null,
+      lastname: null,
+      username: null,
+      password: null,
+      isAdmin: false
+    },
+    quotas: [{
+      quota1: 0,
+      quota2: 0,
+      quota3: 0,
+      quota4: 0,
+      quota5: 0,
+      quota6: 0,
+      quota7: 0,
+      quota8: 0,
+      averageQuota: 0
+    }]
   }
 
   constructor( private emitService: EmitService, private firebaseService: FirebaseService) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    
+  }
+
+  ngOnChanges(changes) {
+    if (changes.storedUsers) {
+      if(!changes.storedUsers.firstChange) {
+        this.storedUsers = changes.storedUsers.currentValue;
+      }
+    }
+
+    console.log('current users', this.storedUsers)
+  }
 
   clear() {
     this.user.firstname = null;
