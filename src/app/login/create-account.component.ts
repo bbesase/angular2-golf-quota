@@ -3,6 +3,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { EmitService } from '../services/emit.service';
 import { FirebaseService } from '../services/firebase.service';
 
+import { includes } from 'lodash';
+
 @Component({
   selector: 'quota-create-account',
   templateUrl: './create-account.component.html',
@@ -13,24 +15,11 @@ export class CreateAccountComponent implements OnInit {
   @Input() storedUsers;
 
   user: any = {
-    info: {
-      firstname: null,
-      lastname: null,
-      username: null,
-      password: null,
-      isAdmin: false
-    },
-    quotas: [{
-      quota1: 0,
-      quota2: 0,
-      quota3: 0,
-      quota4: 0,
-      quota5: 0,
-      quota6: 0,
-      quota7: 0,
-      quota8: 0,
-      averageQuota: 0
-    }]
+    firstname: '',
+    lastname: '',
+    username: '',
+    password: '',
+    isAdmin: false
   }
 
   constructor( private emitService: EmitService, private firebaseService: FirebaseService) { }
@@ -49,19 +38,35 @@ export class CreateAccountComponent implements OnInit {
     console.log('current users', this.storedUsers)
   }
 
-  clear() {
-    this.user.firstname = null;
-    this.user.lastname = null;
-    this.user.username = null;
-    this.user.password = null;
-  }
-
-  create() {
+  _createUser(user) {
     this.firebaseService.createUser(this.user).subscribe((data) => {
-      // need to check here if user already exists or not
       if (data) {
         this.emitService.emitUserCanAdvance(true);
       }
-    })
+    });
+  }
+
+  clear() {
+    this.user.firstname = '';
+    this.user.lastname = '';
+    this.user.username = '';
+    this.user.password = '';
+  }
+
+  create() {
+    let userArray = [this.storedUsers];
+    if(userArray.length > 0) {
+
+      if (!includes(!userArray[0], this.user.username)) {
+  
+        this._createUser(this.user);
+      }
+      else {
+        console.log('user exists already')
+      }
+    }
+    else {
+      this._createUser(this.user);
+    }
   }
 }
