@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { EmitService } from '../services/emit.service';
 
-import { includes } from 'lodash';
+import { includes, find } from 'lodash';
 
 @Component({
   selector: 'quota-login',
@@ -13,6 +13,7 @@ import { includes } from 'lodash';
 export class LoginComponent implements OnInit {
   @Input() storedUsers;
 
+  errorMessage: boolean = false;
   user: any = {
     username: null,
     password: null
@@ -33,6 +34,10 @@ export class LoginComponent implements OnInit {
     console.log('current users', this.storedUsers)
   }
 
+  _setErrorMessage(value) {
+    this.errorMessage = value;
+  }
+
   clear() {
     this.user.username = null;
     this.user.password = null;
@@ -40,8 +45,18 @@ export class LoginComponent implements OnInit {
 
   login() {
     let userArray = [this.storedUsers];
-    if (!includes(!userArray[0], this.user.username)) {
-      this.emitService.emitUserCanAdvance(true);
+    let storedUserInfo = find(this.storedUsers, ['username', this.user.username])
+    if (!includes(this.storedUsers, this.user.username)) {
+      if(storedUserInfo.username === this.user.username && storedUserInfo.password === this.user.password) {
+        this.emitService.emitUserCanAdvance(true);
+        this._setErrorMessage(false)
+      }
+      else {
+        this._setErrorMessage(true);
+      }
+    }
+    else {
+      this._setErrorMessage(true);
     }
   }
 }
