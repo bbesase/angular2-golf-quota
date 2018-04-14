@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +15,9 @@ import { environment } from '../environments/environment';
 
 import { CreateAccountComponent } from './login/create-account.component';
 import { LoginComponent } from './login/login.component';
+
+import { FirebaseService } from './services/firebase.service';
+import { EmitService } from './services/emit.service';
 
 import {
   MatButtonModule,
@@ -41,6 +45,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     CommonModule,
     FormsModule,
+    HttpModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -51,7 +56,10 @@ const appRoutes: Routes = [
     )
     
   ],
-  providers: [],
+  providers: [
+    EmitService,
+    FirebaseService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
