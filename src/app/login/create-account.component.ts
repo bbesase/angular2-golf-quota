@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { EmitService } from '../services/emit.service';
+import { FirebaseService } from '../services/firebase.service';
+
 @Component({
   selector: 'quota-create-account',
   templateUrl: './create-account.component.html',
@@ -11,10 +14,19 @@ export class CreateAccountComponent implements OnInit {
     firstname: null,
     lastname: null,
     username: null,
-    password: null
+    password: null,
+    quota1: 0,
+    quota2: 0,
+    quota3: 0,
+    quota4: 0,
+    quota5: 0,
+    quota6: 0,
+    quota7: 0,
+    quota8: 0,
+    averageQuota: 0,
   }
 
-  constructor() { }
+  constructor( private emitService: EmitService, private firebaseService: FirebaseService) { }
 
   ngOnInit() { }
 
@@ -26,7 +38,11 @@ export class CreateAccountComponent implements OnInit {
   }
 
   create() {
-    console.log('create clicked')
-    // logic for logging in goes here
+    this.firebaseService.createUser(this.user).subscribe((data) => {
+      // need to check here if user already exists or not
+      if (data) {
+        this.emitService.emitUserCanAdvance(true);
+      }
+    })
   }
 }
