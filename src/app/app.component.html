@@ -1,18 +1,24 @@
 <div class="app-container">
   <router-outlet></router-outlet>
-  <quota-create-account *ngIf="isCreatingAccount; else accountLogin" [storedUsers]="userInfo"></quota-create-account>
-
-  <ng-template #accountLogin>
-    <quota-login [storedUsers]="userInfo"></quota-login>
-  </ng-template>
-
-  <div class="login-text-container">
-    <div *ngIf="isCreatingAccount; else login">
-      <span>Already Have An Account <span class="mid-text" (click)="changeText()">Login Here</span></span>
-    </div>
-
-    <ng-template #login>
-      <span>Don't Have An Account <span class="mid-text" (click)="changeText()">Create One Here!</span></span>
-    </ng-template>
+  <div *ngIf="userCanAdvance; else loginScreens">
+    <quota-golfer-table></quota-golfer-table>
   </div>
+
+  <ng-template #loginScreens>
+    <quota-create-account *ngIf="isCreatingAccount; else accountLogin" [storedUsers]="userInfo"></quota-create-account>
+  
+    <ng-template #accountLogin>
+      <quota-login [storedUsers]="userInfo"></quota-login>
+    </ng-template>
+  
+    <div class="login-text-container">
+      <div *ngIf="isCreatingAccount; else login">
+        <span>Already Have An Account <span class="mid-text" (click)="changeText()">Login Here</span></span>
+      </div>
+  
+      <ng-template #login>
+        <span>Don't Have An Account <span class="mid-text" (click)="changeText()">Create One Here!</span></span>
+      </ng-template>
+    </div>
+  </ng-template>
 </div>

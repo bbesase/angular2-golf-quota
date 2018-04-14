@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { environment } from '../environments/environment';
 
 import { CreateAccountComponent } from './login/create-account.component';
+import { GolferTableComponent } from './table/golfer-table.component';
 import { LoginComponent } from './login/login.component';
 
 import { FirebaseService } from './services/firebase.service';
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     CreateAccountComponent,
+    GolferTableComponent,
     LoginComponent
   ],
   imports: [
