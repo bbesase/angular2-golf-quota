@@ -1,3 +1,7 @@
+<div class="error-message" *ngIf="errorMessage">
+  Oops! There was an error with your crendentials, try again :)
+</div>
+
 <div class="login-container">
     <form class="login-form" #loginForm="ngForm" (ngSubmit)="login()">
       <div class="credential-container">
@@ -12,7 +16,7 @@
   
       <div class="action-container">
         <button mat-raised-button class="cancel" (click)="clear()">Cancel</button>
-        <button mat-raised-button class="create" [ngClass]="{success: loginForm.form.valid}" [disabled]="!loginForm.form.valid">Create</button>
+        <button mat-raised-button class="create" [ngClass]="{success: loginForm.form.valid}" [disabled]="!loginForm.form.valid">Login</button>
       </div>
     </form>
   </div>
