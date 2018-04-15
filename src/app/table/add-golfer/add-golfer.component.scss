@@ -1,0 +1,53 @@
+.add-container {
+
+  .error-message {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    color: red;
+    font-size: 20px;
+    margin-bottom: 2rem;
+  }
+
+  .name-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    .firstname {
+      width: 30%;
+    }
+
+    .lastname {
+      width: 30%;
+    }
+
+    .nickname {
+      width: 30%
+    }
+  }
+
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+
+    .quota {
+      width: 20%;
+    }
+  }
+
+  .bottom-row {
+    display: flex;
+    justify-content: space-between;
+
+    .quota {
+      width: 20%;
+    }
+  }
+
+  .action-row {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

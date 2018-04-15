@@ -13,6 +13,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { environment } from '../environments/environment';
 
+import { AddGolferComponent } from './table/add-golfer/add-golfer.component';
 import { CreateAccountComponent } from './login/create-account.component';
 import { GolferTableComponent } from './table/golfer-table.component';
 import { LoginComponent } from './login/login.component';
@@ -22,6 +23,7 @@ import { EmitService } from './services/emit.service';
 
 import {
   MatButtonModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatInputModule,
   MatPaginatorModule,
@@ -37,6 +39,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    AddGolferComponent,
     CreateAccountComponent,
     GolferTableComponent,
     LoginComponent
@@ -52,6 +55,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     MatButtonModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
@@ -62,7 +66,9 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
-    
+  ],
+  entryComponents: [
+    AddGolferComponent
   ],
   providers: [
     EmitService,

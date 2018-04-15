@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { AddGolferComponent } from './add-golfer/add-golfer.component';
 
 @Component({
   selector: 'quota-golfer-table',
@@ -14,7 +16,9 @@ export class GolferTableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  golferToAdd: any = {};
+
+  constructor(public dialog: MatDialog) {
     // Create 100 users
     const users: UserData[] = [];
     for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
@@ -36,6 +40,17 @@ export class GolferTableComponent {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  addGolfer() {
+    let dialogRef = this.dialog.open(AddGolferComponent, {
+      width: '50vw'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.golferToAdd = result;
+      console.log('golfertoadd', this.golferToAdd)
+    })
   }
 }
 

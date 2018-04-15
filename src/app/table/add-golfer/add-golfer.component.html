@@ -1,0 +1,63 @@
+<div class="add-container">
+
+  <div class="error-message" *ngIf="displayError">
+    First or Last name is not filled out, try again :)
+  </div>
+
+  <form class="create-form" #loginForm="ngForm" (ngSubmit)="create()">
+    <div class="name-container">
+      <mat-form-field class="firstname">
+        <input matInput name="firstname" placeholder="First Name" required [(ngModel)]="golfer.firstname" #firstname>
+      </mat-form-field>
+  
+      <mat-form-field class="lastname">
+        <input matInput name="lastname" placeholder="Last Name" required [(ngModel)]="golfer.lastname" #lastname>
+      </mat-form-field>
+
+      <mat-form-field class="nickname">
+        <input matInput name="lastname" placeholder="Nickname" [(ngModel)]="golfer.nickname">
+      </mat-form-field>
+    </div>
+
+    <div class="top-row">
+      <mat-form-field class="quota">
+        <input matInput name="quota1" placeholder="Quota 1" [(ngModel)]="golfer.quota1" type="number">
+      </mat-form-field>
+
+      <mat-form-field class="quota">
+        <input matInput name="quota2" placeholder="Quota 2" [(ngModel)]="golfer.quota2" type="number">
+      </mat-form-field>
+
+      <mat-form-field class="quota">
+        <input matInput name="quota3" placeholder="Quota 3" [(ngModel)]="golfer.quota3" type="number">
+      </mat-form-field>
+
+      <mat-form-field class="quota">
+        <input matInput name="quota4" placeholder="Quota 4" [(ngModel)]="golfer.quota4" type="number">
+      </mat-form-field>
+    </div>
+
+    <div class="bottom-row">
+      <mat-form-field class="quota">
+        <input matInput name="quota5" placeholder="Quota 5" [(ngModel)]="golfer.quota5" type="number">
+      </mat-form-field>
+
+      <mat-form-field class="quota">
+        <input matInput name="quota6" placeholder="Quota 6" [(ngModel)]="golfer.quota6" type="number">
+      </mat-form-field>
+
+      <mat-form-field class="quota">
+        <input matInput name="quota7" placeholder="Quota 7" [(ngModel)]="golfer.quota7" type="number">
+      </mat-form-field>
+
+      <mat-form-field class="quota">
+        <input matInput name="quota8" placeholder="Quota 8" [(ngModel)]="golfer.quota8" type="number">
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div class="action-row">
+      <button mat-raised-button (click)="cancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="createGolfer()">Create</button>
+  </div>
+</div>
