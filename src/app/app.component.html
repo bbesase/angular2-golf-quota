@@ -1,7 +1,7 @@
 <div class="app-container">
   <router-outlet></router-outlet>
   <div *ngIf="userCanAdvance; else loginScreens">
-    <quota-golfer-table></quota-golfer-table>
+    <quota-golfer-table [isAdmin]="loggedInUser"></quota-golfer-table>
   </div>
 
   <ng-template #loginScreens>

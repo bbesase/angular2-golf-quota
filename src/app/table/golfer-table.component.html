@@ -4,7 +4,7 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
 
-    <div class="right">
+    <div class="right" *ngIf="isAdmin">
       <button mat-raised-button color="primary" (click)="addGolfer()">Add Golfer</button>
     </div>
   </div>

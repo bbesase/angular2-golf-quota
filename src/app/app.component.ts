@@ -12,6 +12,7 @@ export class AppComponent {
   isCreatingAccount: boolean = true;
   userCanAdvance: boolean = false;
   userInfo: any = {};
+  loggedInUser: any = {};
 
   constructor(private emitService: EmitService, private firebaseService: FirebaseService) {}
 
@@ -19,6 +20,11 @@ export class AppComponent {
     this.emitService.canUserAdvance.subscribe((value) => {
       this.userCanAdvance = value;
     });
+
+    this.emitService.userInfo.subscribe((data) => {
+      this.loggedInUser = data;
+      console.log('logged in user', this.loggedInUser)
+    })
 
     this.firebaseService.getUsers().subscribe((data) => {
       this.userInfo = data;
