@@ -23,7 +23,10 @@ import { EmitService } from './services/emit.service';
 import {
   MatButtonModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatTableModule
 } from '@angular/material';
 
 const appRoutes: Routes = [
@@ -51,6 +54,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
     ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes,

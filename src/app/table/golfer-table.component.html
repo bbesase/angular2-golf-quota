@@ -1,1 +1,80 @@
-<h1>LETS GO</h1>
+<div class="table-container">
+  <div class="table-header">
+    <mat-form-field class="filter-field">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  
+  <div class="mat-elevation-z8">
+  
+    <mat-table [dataSource]="dataSource" matSort>
+  
+      <!-- ID Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+      </ng-container>
+  
+      <!-- Progress Column -->
+      <ng-container matColumnDef="nickname">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> NickName </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.progress}}% </mat-cell>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="quota1">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quota 1 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
+  
+      <!-- Color Column -->
+      <ng-container matColumnDef="quota2">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quota 2 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.a}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quota3">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quota 3 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.b}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quota4">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quota 4 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.c}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quota5">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quota 5 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.d}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quota6">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quota 6 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.e}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quota7">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quota 7 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.f}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quota8">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quota 8 </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.g}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageQuota">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Average Quota </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.h}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
+  </div>
+</div>
+
+  
