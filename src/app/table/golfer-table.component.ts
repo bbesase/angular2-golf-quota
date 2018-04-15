@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { AddGolferComponent } from './add-golfer/add-golfer.component';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'quota-golfer-table',
@@ -13,12 +14,12 @@ export class GolferTableComponent {
   displayedColumns = ['name', 'nickname', 'quota1', 'quota2', 'quota3', 'quota4', 'quota5', 'quota6', 'quota7', 'quota8', 'averageQuota'];
   dataSource: MatTableDataSource<UserData>;
 
+  @Input() isAdmin;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  golferToAdd: any = {};
-
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private firebaseService: FirebaseService) {
     // Create 100 users
     const users: UserData[] = [];
     for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
@@ -36,6 +37,11 @@ export class GolferTableComponent {
     this.dataSource.sort = this.sort;
   }
 
+  _getAverageQuota(data) {
+    let avg = (data.quota1 + data.quota2 + data.quota3 + data.quota4 + data.quota5 + data.quota6 + data.quota7 + data.quota8) / 8
+    return Math.ceil(avg);
+  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
@@ -48,8 +54,10 @@ export class GolferTableComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.golferToAdd = result;
-      console.log('golfertoadd', this.golferToAdd)
+      result.averageQuota = this._getAverageQuota(result);
+      this.firebaseService.createGolfer(result).subscribe((data) => {
+      console.log('data', data)
+      });
     })
   }
 }

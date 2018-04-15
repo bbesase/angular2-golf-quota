@@ -30,8 +30,6 @@ export class LoginComponent implements OnInit {
         this.storedUsers = changes.storedUsers.currentValue;
       }
     }
-
-    console.log('current users', this.storedUsers)
   }
 
   _setErrorMessage(value) {
@@ -50,6 +48,7 @@ export class LoginComponent implements OnInit {
       if(storedUserInfo.username === this.user.username && storedUserInfo.password === this.user.password) {
         this.emitService.emitUserCanAdvance(true);
         this._setErrorMessage(false)
+        this.emitService.emitUserInfo(storedUserInfo);
       }
       else {
         this._setErrorMessage(true);
