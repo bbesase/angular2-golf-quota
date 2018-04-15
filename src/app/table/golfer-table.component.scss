@@ -2,6 +2,9 @@
   width: 95vw;
 
   .table-header {
+    display: flex;
+    justify-content: space-between;
+    
     .filter-field {
       width: 40%;
     }
