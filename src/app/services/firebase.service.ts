@@ -22,6 +22,14 @@ export class FirebaseService {
       });
   }
 
+  getGolfers() {
+    const url = 'https://angular2-quota.firebaseio.com/golfers.json';
+    return this.http.get(url)
+      .map((res: Response) => {
+        return res.json();
+      });
+  }
+
   getUsers() {
     const url = 'https://angular2-quota.firebaseio.com/users.json';
     return this.http.get(url)

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -71,6 +72,8 @@ const appRoutes: Routes = [
     AddGolferComponent
   ],
   providers: [
+    AngularFireDatabase,
+    AngularFireDatabaseModule,
     EmitService,
     FirebaseService
   ],
