@@ -3,6 +3,10 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { AddGolferComponent } from './add-golfer/add-golfer.component';
 import { FirebaseService } from '../services/firebase.service';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestore } from 'angularfire2/firestore';
+
+import { map } from 'lodash';
 
 @Component({
   selector: 'quota-golfer-table',
@@ -12,26 +16,30 @@ import { FirebaseService } from '../services/firebase.service';
 
 export class GolferTableComponent {
   displayedColumns = ['name', 'nickname', 'quota1', 'quota2', 'quota3', 'quota4', 'quota5', 'quota6', 'quota7', 'quota8', 'averageQuota'];
-  dataSource: MatTableDataSource<UserData>;
+  dataSource: MatTableDataSource<GolferData>;
 
   @Input() isAdmin;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private firebaseService: FirebaseService) {
-    // Create 100 users
-    const users: UserData[] = [];
-    for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
+  golfers: any;
 
+  constructor(public dialog: MatDialog, private firebaseService: FirebaseService, private db: AngularFirestore) {
+    this.dataSource = new MatTableDataSource([]);
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+    this.firebaseService.getGolfers().subscribe((data) => {
+      if (data) {
+        this.golfers = Object.keys(data).map(key => data[key]);
+        this.dataSource = new MatTableDataSource(this.golfers);
+      }
+    });
   }
-
-  /**
-   * Set the paginator and sort after the view init since this component will
-   * be able to query its view for the initialized paginator and sort.
-   */
+  
+  ngOnInit() {
+    
+  }
+  
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -43,8 +51,8 @@ export class GolferTableComponent {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
@@ -55,53 +63,27 @@ export class GolferTableComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       result.averageQuota = this._getAverageQuota(result);
+      this.golfers.push(result);
+      this.dataSource = new MatTableDataSource(this.golfers);
       this.firebaseService.createGolfer(result).subscribe((data) => {
-      console.log('data', data)
       });
+      
     })
   }
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-    a: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-    b: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-    c: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-    d: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-    e: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-    f: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-    g: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-    h: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
-}
-
-/** Constants used to fill up our data base. */
-const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-
-export interface UserData {
-  id: string;
+export interface GolferData {
+  firstname: string;
+  lastname: string;
   name: string;
-  progress: string;
-  color: string;
-  a: string;
-  b: string;
-  c: string;
-  d: string;
-  e: string;
-  f: string;
-  g: string;
-  h: string;
+  nickname: string;
+  quota1: number;
+  quota2: number;
+  quota3: number;
+  quota4: number;
+  quota5: number;
+  quota6: number;
+  quota7: number;
+  quota8: number;
+  averageQuota: number;
 }
