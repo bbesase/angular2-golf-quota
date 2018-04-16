@@ -32,6 +32,8 @@ export class GolferTableComponent {
       if (data) {
         this.golfers = Object.keys(data).map(key => data[key]);
         this.dataSource = new MatTableDataSource(this.golfers);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
     });
   }
@@ -40,11 +42,6 @@ export class GolferTableComponent {
     
   }
   
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   _getAverageQuota(data) {
     let avg = (data.quota1 + data.quota2 + data.quota3 + data.quota4 + data.quota5 + data.quota6 + data.quota7 + data.quota8) / 8
     return Math.ceil(avg);
