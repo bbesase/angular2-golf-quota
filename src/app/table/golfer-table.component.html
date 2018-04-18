@@ -12,7 +12,18 @@
   <div class="mat-elevation-z8">
     <mat-table [dataSource]="dataSource" matSort>
   
-      <!-- ID Column -->
+      <ng-container matColumnDef="addScore">
+        <mat-header-cell *matHeaderCellDef> Add Score </mat-header-cell>
+        <mat-cell *matCellDef="let row"> 
+          <mat-form-field class="add-quota">
+            <input matInput name="spot" #score placeholder="Quota" type="number"/>
+            <button mat-button matSuffix mat-icon-button (click)="addScore(score, row)">
+              <mat-icon *ngIf="score.value.length > 0">add</mat-icon>
+            </button>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>

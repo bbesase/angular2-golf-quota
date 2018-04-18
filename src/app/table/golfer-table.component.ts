@@ -15,7 +15,7 @@ import { map } from 'lodash';
 })
 
 export class GolferTableComponent {
-  displayedColumns = ['name', 'nickname', 'quota1', 'quota2', 'quota3', 'quota4', 'quota5', 'quota6', 'quota7', 'quota8', 'averageQuota'];
+  displayedColumns = [ 'addScore', 'name', 'nickname', 'quota1', 'quota2', 'quota3', 'quota4', 'quota5', 'quota6', 'quota7', 'quota8', 'averageQuota'];
   dataSource: MatTableDataSource<GolferData>;
 
   @Input() isAdmin;
@@ -47,6 +47,19 @@ export class GolferTableComponent {
     return Math.ceil(avg);
   }
 
+  addScore(el, data) {
+    data.quota8 = data.quota7;
+    data.quota7 = data.quota6;
+    data.quota6 = data.quota5;
+    data.quota5 = data.quota4;
+    data.quota4 = data.quota3;
+    data.quota3 = data.quota2;
+    data.quota2 = data.quota1;
+    data.quota1 = el.valueAsNumber;
+    data.averageQuota = this._getAverageQuota(data);
+    console.log('data', data)
+  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
@@ -64,7 +77,6 @@ export class GolferTableComponent {
       this.dataSource = new MatTableDataSource(this.golfers);
       this.firebaseService.createGolfer(result).subscribe((data) => {
       });
-      
     })
   }
 }
