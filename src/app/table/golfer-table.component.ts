@@ -6,7 +6,7 @@ import { FirebaseService } from '../services/firebase.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFirestore } from 'angularfire2/firestore';
 
-import { map } from 'lodash';
+import { find, map } from 'lodash';
 
 @Component({
   selector: 'quota-golfer-table',
@@ -23,14 +23,19 @@ export class GolferTableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  golfers: any;
+  golfers: any = [];
 
   constructor(public dialog: MatDialog, private firebaseService: FirebaseService, private db: AngularFirestore) {
     this.dataSource = new MatTableDataSource([]);
     // Assign the data to the data source for the table to render
     this.firebaseService.getGolfers().subscribe((data) => {
       if (data) {
-        this.golfers = Object.keys(data).map(key => data[key]);
+        this.golfers = Object.keys(data).map((key) => {
+          let golferArr = data[key];
+          golferArr.key = key;
+          return golferArr
+        });
+
         this.dataSource = new MatTableDataSource(this.golfers);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -48,6 +53,9 @@ export class GolferTableComponent {
   }
 
   addScore(el, data) {
+    let key = find(this.golfers, data);
+    console.log('key', key)
+    
     data.quota8 = data.quota7;
     data.quota7 = data.quota6;
     data.quota6 = data.quota5;
@@ -57,7 +65,9 @@ export class GolferTableComponent {
     data.quota2 = data.quota1;
     data.quota1 = el.valueAsNumber;
     data.averageQuota = this._getAverageQuota(data);
-    console.log('data', data)
+    this.firebaseService.updateGolfers(key).subscribe((data) => {
+      el.valueAsNumber = 0;
+    });
   }
 
   applyFilter(filterValue: string) {
