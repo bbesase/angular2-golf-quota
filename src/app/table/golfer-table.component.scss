@@ -12,6 +12,10 @@
 
   .mat-table {
     height: 65vh;
-    overflow-y: auto
+    overflow-y: auto;
+
+    .add-quota {
+      width: 85%;
+    }
   }
 }
