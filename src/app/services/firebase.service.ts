@@ -37,4 +37,13 @@ export class FirebaseService {
         return res.json();
       });
   }
+
+  updateGolfers(userInfo) {
+
+    const url = `https://angular2-quota.firebaseio.com/golfers/${userInfo.key}.json`;
+    return this.http.put(url, userInfo)
+      .map((res: Response) => {
+        return res.json();
+      });
+  }
 }
